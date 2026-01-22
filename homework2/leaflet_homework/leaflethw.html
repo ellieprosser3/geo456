@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Map of Théâtre Silvain</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+
+
+ <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
+     <script src = "./theater.geojson"></script>
+
+
+</head>
+<body>
+    
+<div id="mapid"></div>
+<style>
+    #mapid{width: 900px; height: 500px;}
+</style>
+
+<script>
+    var map = L.map('mapid').setView([43.281743, 5.355072], 17);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map)
+    // L.marker([43.281743, 5.355072]).addTo(map)
+  // .bindPopup("Théâtre Silvain)
+  //  .openPopup();
+
+    var theaterIcon = L.icon({
+        iconUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAhFBMVEUAAAD////r6+vq6urp6env7+/5+fn09PT8/Pz29vbx8fH6+vogICCenp6SkpKrq6u6urowMDDT09NISEiPj4/e3t7JycmYmJixsbHHx8fBwcErKyuFhYVCQkJkZGQXFxc5OTkNDQ15eXltbW0eHh5VVVVSUlI0NDRlZWWBgYGkpKRFRUVcQLrpAAANMElEQVR4nO1d6ZqqOBCVQFiC20Vx682l7bltv//7DQkqWxKyIvQ1P2bq6zlT5ghJFVUHM4pcAIAbOtkIiRlhE2YWgNhyAvJXYsbE9IlNzMDpPdgfPRn2cNL/GkOIkM9n6Lmu6+UMiZkzzCwX5Gjy19w1MXN/xLzO44FgALbL6XTFBvujwMcDkUHMAFtR8deSGRSAHBvVEZ2B49iPgmC7Oy5eRqPR59QLWOBR6cu6XWEXlK5pftc6AJuImAib+S0QuQ8AAwz2/dnyDyZ3HfsUMDyPqDd8Y106+L+D2zzuNzl9EVsEQ4gCL01evw+j2th7DM8DY7jaLd/f6uTycXEUGHoy87AHJvtl4Kzm33s6OTLeGZ6p67C5tzZWS75R0Tdiw2AHpMl0Wl501HGAdM9ZtMDj+rl45NECW7edFw+nAFz3dDzyidkDI+itJsf3Fm75GHuA5jluj/iRTFw2BQbYTFfTL8aio40LonlWz2k8mcxDCgyyK5fONj97cXJkLBHNc78YklmA5PV0aAQDgTGVY+hW0R530vrgMNsug8hLN6ezAjc6w1vWFpE9NWdIzIxh6KDbNx06QQHwwW2JhPlWHDjGwKvZeaFy5SgMq55v0SLbZL0rf4+6pxcA5LUGABkw8tL1evGfFjkyJtRpPDCngTC7oOl2edLnVmbYk6wtyy9hspv9/WOKXY8Y4ogcOvPZ+15v0ckz7CBr83F6mSbr5efYNLkSQ0rW1snw/TAEyfz01wq3fKxD6kfzqhjFNWXUGlzqDUCrNezmx6+21Fl3TBFtGnYrUdnzqhPH88ne6I7CZiiV07QybE3EcKBbfb8a31D6wBCb2Y7y96czcnyG9HWI04H2mt/tka8EhhDM598dk8sZQtqcfUo8xGZMGJOAEhWAawAA17iWRQvQACcnO7GgfUzoc5aJ+G5rxAfx64PojRgR33Q1EX4/jmAnWRuaPJBga9aW/b1geNt5SmiXeZeWwGI1I6sMG3MeBSEeKEv2ISJmgE0fWzG2YEQFQGJGsAxG8FGbzJUhbc4BJ1qId4hu4NUjCeZZGyVamMza5g9maD+neTJ8EEODPeBHM+T1gIOiERvdm6iNPiyvU5uZ0eahDNcOdc6tVYzWTm0BhrOHMpzQ52wyp+kFQ6tZ25PhYxnijuKtqu/dmq8eNnO0i81boR7b+UbllcF9YNiYs2YPuPT19CBaQMUe8PAj/jMv/QXXkBbh1Wrej2bIqHkjWpZWz+IYcrpqyhc+OGvzqXOmZG30HnApa2O1dfsQLSi9p0FG/K/zfDef1bQ2vyanOS2TlHw2QtXK+i9g+PmynKQpFvGRaQBUXffiPeD7OnRq97THW4eO3XX4Zz/bhjHuKBTTAOlHg2FzzqNSQdAvKnGl4mEOiGuAkJjVUqStaHFerhInjLItuzYNp9KXnEa0OUejelG30ESVKsTtMidL8fDjtE4S9jSqDBFtzj3O2sZ/JnMvW3WQM40Gw8FkbW/HzcoJnUIiZoGhW0WLifGMMDwtd6tsY3BEpsFlaEO5p8nw8PK6yRYSvjEFNYF0hvaUezrRYnyc7SIPwdtXL6QJhBUBSwfKPVWGX6/zVf7RgOGZMQ1EYdi3nObzdFkl2W0Z8D0Pk+HhfTnHzCBs92yCoQnlnjjD/fEyBzAU9kyfBmhbh8aVe7HIE/DhPN0lsR/7Jj6wspd2odxrixZZNMizFFOawFq0sK/c4zAcn9a7ALtuS1Ok3iHtSdZ2WEw3WxeiyFH33F+Gh9Ms8fL90sYLNmIMDSr3agwP33m9gS3zE/bMAFcZ2lfuoVq0SHhgKc90MKTFwwbYpHKvFg+PXLCUZwZYIOJbrSZuxSfdRU5jnuGn0qQtZm1AX7lXZTjmg6U8M8A0hlaVe8GmypALlvJMB6OgxtC+cq8SLcaQD5byLBQtulbujSEfPPysrczQ1kvDT4aOVeUeax0qedZZh9aUe+OQC5byTAcHUWUv7Vy5N+aDpTzTwcwqRkfKPXrE/01Z25Nh1wzNK/fGfLCUZzqYVtXvUrmXRQsuWMozA1x7xu9YudefiP/MS3/BNaSFVgM174yh2qvtxmvetpR7YywPYYOlPDPAYbVv0bVyb8wHS3lmgMV6T/9MxH8yHD5D2jrUU+7x1qGsZwaYmrXVwfaUe+MA8cBSnhngByv3WBFfyXMvlXvPrO2ZeZtjaKsH3KgmWu8BI0YPGG84Dtl74L2XAsg2FIL7BpcDEAY4qMBGoAxGtWjBBUt5ZoDr8ZAKpnfX6L+Fy+/UinXX1DwzwG3dNQL+d3Ka38+wepdSmq/se0m3ByzgWe8uFesBQ2s9YBHPDHBLD/i608j0gENrPeA2zwxwQzH07AE/s7ahMqSuQ5d2T7NyK1doHdbAUp61tBhkBGQUdm6hmhmUsH4T4dd7wDywlGcG2K/2gEMqWLUHLFxNZIGlPNPBzx5wNad5Mhw+Q3oP2PWKt6TuAFanllFNZIClPNPBjGpiFczM2qr1UwFdT2vvqQ6W8iwcLRrgZ9bGnseQcprfz7C0DoH7u3vApTPLGhq61k4tavaAxdR5Ip4Z4CrDdUQFy/Se3Ps2bbr31OaZARboPT2ztifDITEUWYfc9/H1esAy67Ata2v0gPNtJ87GdS/NrJBYCP8xJgCYmxCbEbEh2fHiMrjRA+aBpTwzwPUeMBUs1wP26HH5BtboAbd4ZoCt9oCHlNMMl2H4Yo4hX0+gw1DMMx28HfEY8n69peoa3L+CmADyeZT2bQZDxAdLeaaD2QwLMPfXW8o7r+vZihYinulgWD1nrxEtCHjIER/WXh3/dTlNgL5+O8P6oXud/3pLa81b70S34DiiMmw+PfH6FgHVZPw5qPctYi5YynPJzP7hh763+6gTvPYtGv9f36uJ98VD0lVshmFyOTf5DbSaGCGYpmm0Wk8m6yUek8n5g3XUy7CyNpx3oHR5kjladkjKPYjA7niWPU1wOMo96G3eVA4dGopyL0iXtG1EYAxDuQeh+sFtg1DuwZXEWep0hv3O2qKlOr9hKPemOgQHoNxz1loE+6/cQ7q/yt935R5MdA/e6yJr27EYCmRtSPv4yy4YVs6klmMIUl2CnSj3FlWGfHDVs0akLxgy1iHnCVhOXxd5nxWGMsq9CC1YExce9pV7qHoZ5JR7SJugfeUeTKtHcEvlNEFiiqG9rM3xagfJSjGMDJyzaz0vrT+NyzG8WGeoq9yb7+sfKKXciwycdm1TuZdM/mt+oFStzdEnaKrWhtPofKakpewAmCy/qB8olbU5is/1VYb6OY2DULLdJike61M2jpwoJpXTmGC41GKYmenusljQL5cBhvoERxd15R5E3nwpW9uTU+45+jvNmMxeRbnnR9vvz/YPaH6ijHIv1Hz6zcaHFygp9yBMFI+El1LuGThK+J3uuS3io61EWZ3KULASpZ+XXhy6Zy5DADSKX3IMY+1ni5ThmcfQAYo3qAJDzTrbaPTjtTCkrsO/7Y5bGYqK8XSf8b8h3TNXuadzBWWVe6iuO5AcH4Dlma3cCzTvG0nlHtTbTc8sz+ycRrt8KVlrgyklexcfK5ZnNkNPOonRYwiQzolfZ6ZnJkOk/UgqrdyDGisxYnpmKfeQ9iWUV+5B9e10w/bMUu45+pUhBeWe6n36jpNuhmdWxHe0OnllhjL9Q1+RYgo5nukMga8XCxUZIqT0xSYhzzODITy0O7bAEAQKVzHhe6bXvAFSeSKkM2TWvKnKPbSRbbIlLZ7pfYvYQPlSUbkXo7qqkjveVmGLZ0Y1Uf+RW125hzZ74Q9ZurDFMyvim2Eo0wMugREQ5HhOcjUCz7NFhh8ayr2MY/tmfk5EPFtkSMqXGtrEdMlLxQ+nlZhnlnIv1a/QTjgneIj1C8Lgsl6Mm7v6y+dx7qFQzDOjBxx5+gxLouT2vTSgziIKMx9os5n9vL39LPB4O25m2yAKY1/UM62aiOOhgYifHxhePpRDTMneAOctktwkB2DywKK/BQ0i5SLibRy86zxkchobYFbmrVv6Gh2jnjPUTmrmQc8Y1p8PdWvQH2nx885e+/OhRTCrigE1H58mqj9XYhrMrNNAvdv0M1B8adI4mNMh/dPOgz3myq/2mgZz6qWNN6ckxrvVSUszdEERLcG9BwzAXp0h9qH4ArppsH/vW/j+vW+Rmfjf8qfd38bOif241FyOix5wfO0uYLPo1NoE83pPqvfpKxH/qR0GYB7M6x8CtU7CyXoQlwJzO6RKzZKj/UkbYxiq9INWHUxaiSFdiwFTyai4IM9MtpeWFJi9l5J9KQQyEvrDGkWcHS+W2R6NgTnx8HpN58KP+2d4ffOH/H/9iYesrO3+inEqpMj6IKWhTtIUQ1lbgQZB+tr20tziNe1u0sYZ4vdyXW/CfHP1v/06AajDSVtgmKP91fpnUZEuvXx9nXcJLg91+sgn+XzI/fUWr/y8DCDGXibrKR6TyWSd+B6AkApuexLvDqyg1c+34vwLAg8J4lJgk2/J9hP8ZNjLSUuB/wfeIyKlPBEiPgAAAABJRU5ErkJggg==',
+    iconSize: [40,40],
+    popupAnchor: [0,0]
+    });
+
+var theaterPopup = "Théâtre Silvain<br/><img src='images/myphoto.jpeg' width='100px'/>";
+
+L.marker([43.281743, 5.355072], { icon: theaterIcon })
+  .addTo(map)
+  .bindPopup("Théâtre Silvain: This is an outdoor ampitheater in Marseille, France. This ampitheater borders the Mediterranean Sea, and hosts the famous 'Marseille Jazz des 5 continents' festival. <br/><img src='images/myphoto.jpeg' width='100px'/>")
+  .openPopup();
+
+
+ // the following line should go at the end, before script closing tag 
+
+ //  L.geoJSON(theater, {   // a
+  // pointToLayer: function (feature, latlng) { // b
+  //  return L.marker(latlng, {icon: theaterIcon});}}) // c
+  // .bindPopup(theaterPopup) // d
+  // .addTo(map); // 
+</script>
+
+</body>
+</html>
