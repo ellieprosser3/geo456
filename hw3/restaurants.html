@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>Chapel Hill Restaurants</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+        <script src="./restaurant.js" ></script>
+    </head>
+    <body>
+    
+    <div id="mapid"></div>
+    
+    <style>
+        #mapid{ width: 900px; height: 500px; }
+    </style>
+    <script>  
+
+
+    var map = L.map('mapid').setView([35.9, -79.05622708511437], 14); // YOU CAN CHANGE THE ZOOM
+
+    // this line is creating the variable map by  initializing the L.map class (a Leaflet class) with the mapid element that we created before. setView is a method that can be applied to the class L.map : you can give it a latitude, longitude and a zoom.  The higher the value of the zoom, the finer the initial scale of the map. 
+
+    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        })
+
+        var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});
+
+ var restaurantIcon = L.icon({
+        iconUrl: 'data:image/png;base64,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',
+    iconSize: [30,30],
+    popupAnchor: [0,0]
+    }); 
+
+
+var myGEOJSON = L.geoJSON(CHeats, {
+    pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, { icon: restaurantIcon });
+    },
+    onEachFeature: function (feature, layer) {
+        if (feature.properties && feature.properties.Name) {
+            layer.bindPopup(feature.properties.Name);
+        }
+    }
+}).addTo(map);
+
+
+
+
+var baseMaps = {
+    "OpenStreetMap": osm,
+    "ESRI": Esri_WorldImagery
+};
+
+var overlayMaps = {
+    "Chapel Hill Restaurants": myGEOJSON
+};
+var layercontrol = L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+osm.addTo(map);
+myGEOJSON.addTo(map);
+
+
+
+
+    </script>
+    </body>
+</html>
