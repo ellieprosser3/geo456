@@ -1,0 +1,13 @@
+var CHeats = {"type":"FeatureCollection","features":[{"type":"Feature","properties":{"Name":"Buns"},"geometry":{"coordinates":[-79.05622708511437,35.91345544285764],"type":"Point"},"id":0},
+{"type":"Feature","properties":{"Name":"Tru"},"geometry":{"coordinates":[-79.05314607118903,35.915169604230314],"type":"Point"},"id":1},
+{"type":"Feature","properties":{"Name":"Al's"},"geometry":{"coordinates":[-79.06406959780288,35.91011719044616],"type":"Point"},"id":2},
+{"type":"Feature","properties":{"Name":"Napoli"},"geometry":{"coordinates":[-79.07141309408938,35.91050931650487],"type":"Point"},"id":3},
+{"type":"Feature","properties":{"Name":"Luna"},"geometry":{"coordinates":[-79.06808477039267,35.910946902986126],"type":"Point"},"id":4},
+{"type":"Feature","properties":{"Name":"Vimalas"},"geometry":{"coordinates":[-79.06274594121047,35.909779570363696],"type":"Point"},"id":5},
+{"type":"Feature","properties":{"Name": "Merritt's Grill"},"geometry":{"coordinates":[-79.05834144390697,35.89608119229099],"type":"Point"}},
+{"type":"Feature","properties":{"Name":"411 West"},"geometry":{"coordinates":[-79.06151455843562,35.91060276828321],"type":"Point"},"id":7},
+{"type":"Feature","properties":{"Name":"Spicy9"},"geometry":{"coordinates":[-79.05752800112691,35.912693516167636],"type":"Point"},"id":8},
+{"type":"Feature","properties":{"Name":"Roots"},"geometry":{"coordinates":[-79.05786312967282,35.91213257014077],"type":"Point"},"id":9},
+{"type":"Feature","properties":{"Name":"Bonchon Chicken"},"geometry":{"coordinates":[-79.05266395036217,35.91450918650126],"type":"Point"},"id":10},
+{"type":"Feature","properties":{"Name":"1922 coffee"},"geometry":{"coordinates":[-79.05431725118679,35.91353207456818],"type":"Point"},"id":11},
+{"type":"Feature","properties":{"Name":"Tesoro"},"geometry":{"coordinates":[-79.07157477441045,35.910752759732816],"type":"Point"},"id":12}]}
