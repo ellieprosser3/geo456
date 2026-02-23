@@ -1,4 +1,4 @@
- var data = {
+var data = {
  "currentVersion": 11.5,
  "cimVersion": "3.5.0",
  "serviceDescription": "The ratio between the number of Lusitanian (warm-favouring) and Boreal (cool-favouring) species are significantly increasing in 6 of the Northern division whereas there is no significant changes in all the (Southern) other divisions.",
@@ -17,6 +17,42 @@
    "maxScale": 0,
    "type": "Feature Layer",
    "geometryType": "esriGeometryPoint",
+   "supportsDynamicLegends": true
+  },
+  {
+   "id": 1,
+   "name": "Northern Divisions",
+   "parentLayerId": -1,
+   "defaultVisibility": false,
+   "subLayerIds": null,
+   "minScale": 0,
+   "maxScale": 0,
+   "type": "Feature Layer",
+   "geometryType": "esriGeometryPolygon",
+   "supportsDynamicLegends": true
+  },
+  {
+   "id": 2,
+   "name": "Southern Divisions",
+   "parentLayerId": -1,
+   "defaultVisibility": true,
+   "subLayerIds": null,
+   "minScale": 0,
+   "maxScale": 0,
+   "type": "Feature Layer",
+   "geometryType": "esriGeometryPolygon",
+   "supportsDynamicLegends": false
+  },
+  {
+   "id": 3,
+   "name": "Central Divisions",
+   "parentLayerId": -1,
+   "defaultVisibility": false,
+   "subLayerIds": null,
+   "minScale": 0,
+   "maxScale": 0,
+   "type": "Feature Layer",
+   "geometryType": "esriGeometryPolygon",
    "supportsDynamicLegends": true
   }
  ],
