@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fish Layers</title>
+</head>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #ffffff;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .visible {
+        background-color: green;
+        color: white;
+    }
+
+    .not-visible {
+        background-color: red;
+        color: white;
+    }
+</style>
+
+<body>
+
+<h1>Fish Layer Data</h1>
+
+<table id="fish_table">
+    <tr> 
+        <th>ID</th>
+        <th>Name</th>
+        <th>Geometry Type</th>
+        <th>Default Visibility</th>
+    </tr>
+</table>   
+
+<script src="./data.js"></script>
+
+<script>
+    var myTable = document.getElementById("fish_table");
+
+    function layerTable(layer){
+        var myNewRow = document.createElement('tr');
+
+        var cell1 = document.createElement('td');
+        var cell2 = document.createElement('td');
+        var cell3 = document.createElement('td');
+        var cell4 = document.createElement('td');
+
+        cell1.innerHTML = layer.id;
+        cell2.innerHTML = layer.name;
+        cell3.innerHTML = layer.geometryType;
+
+        var visible = !!layer.defaultVisibility;
+        cell4.innerHTML = visible ? "Yes" : "No";
+        cell4.className = visible ? "visible" : "not-visible";
+
+        myNewRow.append(cell1);
+        myNewRow.append(cell2);
+        myNewRow.append(cell3);
+        myNewRow.append(cell4);
+
+        myTable.append(myNewRow);
+    }
+
+    data.layers.forEach(e => layerTable(e));
+
+</script>
+
+</body>
+</html>
