@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>W85 Movement</title>
+
+  <link rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+    crossorigin=""/>
+
+  <script
+    src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+    integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+    crossorigin=""></script>
+
+  <!-- your GeoJSON file -->
+  <script src="./data.js"></script>
+
+  <style>
+    #map {
+      width: 100%;
+      height: 500px;
+    }
+  </style>
+</head>
+
+<body>
+  <h3 id="daYear">Day</h3>
+  <input id="dateSlider" type="range" name="Day" min="0" max="0" oninput="moveSlider(this.value)">
+  <div id="map"></div>
+
+  <script>
+    // Keep data accessible in console (if your assignment requires it)
+    window.data = data;
+
+    // Create map (same pattern as example)
+    var map = L.map('map').setView([-2.5, 34.8], 10);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    // Filter ONLY animal W85
+    var w85 = data.features.filter(function(feature) {
+      return feature.properties && feature.properties.AID === "W85";
+    });
+
+    console.log("W85 count:", w85.length);
+
+    // Set slider max based on filtered features
+    document.getElementById('dateSlider').max = Math.max(0, w85.length - 1);
+
+    // Icon setup (match example style using L.Icon.extend)
+    var LeafIcon = L.Icon.extend({
+      options: {
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [0, -20]
+      }
+    });
+
+    var greenIcon = new LeafIcon({ iconUrl: './wildebeest.png' });
+
+    // Start layer (same pattern: geojson variable)
+    var geojson = L.geoJson(w85[0], {
+      pointToLayer: function(feature, latlng) {
+        return L.marker(latlng, { icon: greenIcon }).bindPopup(
+          "Animal: W85<br>" +
+          "Date: " + feature.properties.Date + "<br>" +
+          "NDVI: " + feature.properties.NDVI
+        );
+      }
+    }).addTo(map);
+
+    function moveSlider(value) {
+      value = Number(value);
+
+      // Guard in case w85 is empty or slider is out of range
+      if (!w85.length || value < 0 || value >= w85.length) return;
+
+      map.removeLayer(geojson);
+
+      // Update label (match example’s "Day ..." format, but with your info)
+      document.getElementById('daYear').innerHTML =
+        'Day ' + value + ' | Animal W85 | ' + w85[value].properties.Date;
+
+      geojson = L.geoJson(w85[value], {
+        pointToLayer: function(feature, latlng) {
+          return L.marker(latlng, { icon: greenIcon }).bindPopup(
+            "Animal: W85<br>" +
+            "Date: " + feature.properties.Date + "<br>" +
+            "NDVI: " + feature.properties.NDVI
+          );
+        }
+      });
+
+      map.addLayer(geojson);
+
+      // Optional: recenter like your original version
+      var coords = w85[value].geometry.coordinates;
+      map.setView([coords[1], coords[0]], 13);
+    }
+
+    moveSlider(0);
+
+    window.onload = function() {
+      document.getElementById('dateSlider').value = 0;
+    };
+  </script>
+</body>
+</html>
