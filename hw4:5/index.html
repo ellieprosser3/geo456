@@ -16,7 +16,7 @@
     integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
     crossorigin=""></script>
 
-  <!-- your GeoJSON file -->
+
   <script src="./data.js"></script>
 
   <style>
@@ -33,27 +33,27 @@
   <div id="map"></div>
 
   <script>
-    // Keep data accessible in console (if your assignment requires it)
+    
     window.data = data;
 
-    // Create map (same pattern as example)
+ 
     var map = L.map('map').setView([-2.5, 34.8], 10);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '© OpenStreetMap'
     }).addTo(map);
 
-    // Filter ONLY animal W85
+    // Filter animal W85
     var w85 = data.features.filter(function(feature) {
       return feature.properties && feature.properties.AID === "W85";
     });
 
     console.log("W85 count:", w85.length);
 
-    // Set slider max based on filtered features
+  
     document.getElementById('dateSlider').max = Math.max(0, w85.length - 1);
 
-    // Icon setup (match example style using L.Icon.extend)
+   
     var LeafIcon = L.Icon.extend({
       options: {
         iconSize: [40, 40],
@@ -64,7 +64,7 @@
 
     var greenIcon = new LeafIcon({ iconUrl: './wildebeest.png' });
 
-    // Start layer (same pattern: geojson variable)
+  
     var geojson = L.geoJson(w85[0], {
       pointToLayer: function(feature, latlng) {
         return L.marker(latlng, { icon: greenIcon }).bindPopup(
@@ -78,12 +78,12 @@
     function moveSlider(value) {
       value = Number(value);
 
-      // Guard in case w85 is empty or slider is out of range
+      
       if (!w85.length || value < 0 || value >= w85.length) return;
 
       map.removeLayer(geojson);
 
-      // Update label (match example’s "Day ..." format, but with your info)
+      
       document.getElementById('daYear').innerHTML =
         'Day ' + value + ' | Animal W85 | ' + w85[value].properties.Date;
 
@@ -99,7 +99,7 @@
 
       map.addLayer(geojson);
 
-      // Optional: recenter like your original version
+      
       var coords = w85[value].geometry.coordinates;
       map.setView([coords[1], coords[0]], 13);
     }
